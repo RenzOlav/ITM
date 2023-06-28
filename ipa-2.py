@@ -6,94 +6,71 @@ This assignment will develop your proficiency with Python's control flows.
 '''
 
 def shift_letter(letter, shift):
-    '''Shift Letter.
-    5 points.
+    if letter == " ":
+        print(" ")
+    elif letter == "":
+        print(" ")
+    else:
+        alphabet = list('abcdefghijklmnopqrstuvwxyz')
+        index = alphabet.index(letter.lower())
+        shifted_index = (index + shift) % 26
+        shifted_letter = alphabet[shifted_index]
 
-    Shift a letter right by the given number.
-    Wrap the letter around if it reaches the end of the alphabet.
+        if letter.isupper():
+            shifted_letter = shifted_letter.upper()
+        print(shifted_letter)
+        return(shifted_letter)
 
-    Examples:
-    shift_letter("A", 0) -> "A"
-    shift_letter("A", 2) -> "C"
-    shift_letter("Z", 1) -> "A"
-    shift_letter("X", 5) -> "C"
-    shift_letter(" ", _) -> " "
 
-    *Note: the single underscore `_` is used to acknowledge the presence
-        of a value without caring about its contents.
 
-    Parameters
-    ----------
-    letter: str
-        a single uppercase English letter, or a space.
-    shift: int
-        the number by which to shift the letter.
 
-    Returns
-    -------
-    str
-        the letter, shifted appropriately, if a letter.
-        a single space if the original letter was a space.
-    '''
-    # Replace `pass` with your code.
-    # Stay within the function. Only use the parameters as input. The function should return your answer.
-    alphabet = str(['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'])
-    if letter == alphabet:
-        print(alphabet[::shift])
-
-shift_letter('A',2)
+# Example usage
+input_letter = str(input("Enter a letter: "))
+shift_amount = int(input("Enter the shift amount: "))
+shift_letter(input_letter,shift_amount)
 
 def caesar_cipher(message, shift):
-    '''Caesar Cipher.
-    10 points.
+    for i in message:
+        if i == " ":
+            print(" ", end="")
+        else:
+            letter = i
+            alphabet = list('abcdefghijklmnopqrstuvwxyz')
+            index = alphabet.index(letter.lower())
+            shifted_index = (index + shift) % 26
+            shifted_letter = alphabet[shifted_index]
 
-    Apply a shift number to a string of uppercase English letters and spaces.
+            if letter.isupper():
+                shifted_letter = shifted_letter.upper()
+            print(shifted_letter, end="")
+    return shifted_letter
 
-    Parameters
-    ----------
-    message: str
-        a string of uppercase English letters and spaces.
-    shift: int
-        the number by which to shift the letters.
 
-    Returns
-    -------
-    str
-        the message, shifted appropriately.
-    '''
-    # Replace `pass` with your code.
-    # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+messager=str(input("Put message:"))
+shifty=int(input("Number of shift:"))
+caesar_cipher(messager, shifty)
 
 def shift_by_letter(letter, letter_shift):
-    '''Shift By Letter.
-    10 points.
+    if letter == " ":
+        print(" ")
+    elif letter == "":
+        print(" ")
+    else:
+        letter_shift = letter_shift.upper()
+        letter_shift = ord(letter_shift) - 65
+        alphabet = list('abcdefghijklmnopqrstuvwxyz')
+        index = alphabet.index(letter.lower())
+        shifted_index = (index + letter_shift) % 26
+        shifted_letter = alphabet[shifted_index]
 
-    Shift a letter to the right using the number equivalent of another letter.
-    The shift letter is any letter from A to Z, where A represents 0, B represents 1,
-        ..., Z represents 25.
+        if letter.isupper():
+            shifted_letter = shifted_letter.upper()
+        print(shifted_letter)
+        return(shifted_letter)
 
-    Examples:
-    shift_by_letter("A", "A") -> "A"
-    shift_by_letter("A", "C") -> "C"
-    shift_by_letter("B", "K") -> "L"
-    shift_by_letter(" ", _) -> " "
-
-    Parameters
-    ----------
-    letter: str
-        a single uppercase English letter, or a space.
-    letter_shift: str
-        a single uppercase English letter.
-
-    Returns
-    -------
-    str
-        the letter, shifted appropriately.
-    '''
-    # Replace `pass` with your code.
-    # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+liter = str(input("input a letter buddy"))
+liter_ship = str(input("isa pang letter buddy"))
+shift_by_letter(liter,liter_ship)
 
 def vigenere_cipher(message, key):
     '''Vigenere Cipher.
