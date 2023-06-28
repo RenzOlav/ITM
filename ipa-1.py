@@ -9,7 +9,7 @@ def savings(gross_pay, tax_rate, expenses):
         print(f'your money (in centavos) after taxes and expenses {int(take_home)}')
     else:
         print("invalid tax rate")
-    return
+    return int(take_home)
 
 #material_waste
 def material_waste(total_material, material_units, num_jobs, job_consumption):
@@ -18,7 +18,7 @@ def material_waste(total_material, material_units, num_jobs, job_consumption):
     waste=str(waste)+material_units
 
     print(waste)
-    return
+    return waste
 
 #interest
 def interest(principal, rate, periods):
@@ -27,7 +27,7 @@ def interest(principal, rate, periods):
     final_value=int(math.floor(final_value))
 
     print(f'Final Value of the investment is {final_value}')
-    return
+    return final_value
 
 def body_mass_index(weight, height):
     weight = weight / 2.205
@@ -35,6 +35,7 @@ def body_mass_index(weight, height):
     bmi=weight / (height**2)
 
     print(f'your bmi {bmi}')
+    return bmi
 
 #tests
 savings(956472,0.1,2000)
