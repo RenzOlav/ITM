@@ -73,117 +73,95 @@ liter_ship = str(input("isa pang letter buddy"))
 shift_by_letter(liter,liter_ship)
 
 def vigenere_cipher(message, key):
-    '''Vigenere Cipher.
-    15 points.
+    ciphertext = ""
+    key_length = len(key)
+    key_index = 0
 
-    Encrypts a message using a keyphrase instead of a static number.
-    Every letter in the message is shifted by the number represented by the
-        respective letter in the key.
-    Spaces should be ignored.
+    for letter in message:
+        if letter.isalpha():
+            letter_shift = key[key_index].upper()
+            letter_shift = ord(letter_shift) - 65
+            alphabet = list('abcdefghijklmnopqrstuvwxyz')
+            index = alphabet.index(letter.lower())
+            shifted_index = (index + letter_shift) % 26
+            shifted_letter = alphabet[shifted_index]
 
-    Example:
-    vigenere_cipher("A C", "KEY") -> "K A"
+            if letter.isupper():
+                shifted_letter = shifted_letter.upper()
 
-    If needed, the keyphrase is extended to match the length of the key.
-        If the key is "KEY" and the message is "LONGTEXT",
-        the key will be extended to be "KEYKEYKE".
+            ciphertext += shifted_letter
+            key_index = (key_index + 1) % key_length
+        else:
+            ciphertext += letter
 
-    Parameters
-    ----------
-    message: str
-        a string of uppercase English letters and spaces.
-    key: str
-        a string of uppercase English letters. Will never be longer than the message.
-        Will never contain spaces.
+    return ciphertext
 
-    Returns
-    -------
-    str
-        the message, shifted appropriately.
-    '''
-    # Replace `pass` with your code.
-    # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+
+message = input("Ano message mo para sa madlang people? : ")
+key = input("bigay ka isang word tapos dapat di siya mas mahaba sa message mo kanina ")
+
+encrypted_text = vigenere_cipher(message, key)
+print("Encrypted text:", encrypted_text)
+
+
 
 def scytale_cipher(message, shift):
-    '''Scytale Cipher.
-    15 points.
+    # Prepare the grid
+    ciphertext = ""
+    rows = len(message) // shift
+    if len(message) % shift != 0:
+        rows += 1
+    grid = [[""] * shift for _ in range(rows)]
 
-    Encrypts a message by simulating a scytale cipher.
+    # Fill the grid with the plaintext
+    char_index = 0
+    for col in range(shift):
+        for row in range(rows):
+            if char_index < len(message):
+                grid[row][col] = message[char_index]
+                char_index += 1
 
-    A scytale is a cylinder around which you can wrap a long strip of
-        parchment that contained a string of apparent gibberish. The parchment,
-        when read using the scytale, would reveal a message due to every nth
-        letter now appearing next to each other, revealing a proper message.
-    This encryption method is obsolete and should never be used to encrypt
-        data in production settings.
+    # Read the ciphertext column by column
+    for row in range(rows):
+        for col in range(shift):
+            ciphertext += grid[row][col]
 
-    You may read more about the method here:
-        https://en.wikipedia.org/wiki/Scytale
+    return ciphertext
 
-    You may follow this algorithm to implement a scytale-style cipher:
-    1. Take a message to be encoded and a "shift" number.
-        For this example, we will use "INFORMATION_AGE" as
-        the message and 3 as the shift.
-    2. Check if the length of the message is a multiple of
-        the shift. If it is not, add additional underscores
-        to the end of the message until it is.
-        In this example, "INFORMATION_AGE" is already a multiple of 3,
-        so we will leave it alone.
-    3. This is the tricky part. Construct the encoded message.
-        For each index i in the encoded message, use the character at the index
-        (i // shift) + (len(message) // shift) * (i % shift) of the raw message.
-        If this number doesn't make sense, you can play around with the cipher at
-         https://dencode.com/en/cipher/scytale to try to understand it.
-    4. Return the encoded message. In this case,
-        the output should be "IMNNA_FTAOIGROE".
 
-    Example:
-    scytale_cipher("INFORMATION_AGE", 3) -> "IMNNA_FTAOIGROE"
-    scytale_cipher("INFORMATION_AGE", 4) -> "IRIANMOGFANEOT__"
-    scytale_cipher("ALGORITHMS_ARE_IMPORTANT", 8) -> "AOTSRIOALRH_EMRNGIMA_PTT"
+mensahe = input("Enter the message (scytale): ")
+diameter = int(input("Enter the shift of the Scytale: "))
 
-    Parameters
-    ----------
-    message: str
-        a string of uppercase English letters and underscores (underscores represent spaces)
-    shift: int
-        a positive int that does not exceed the length of message
+encrypted_text = scytale_cipher(mensahe, diameter)
+print("Encrypted text:", encrypted_text)
 
-    Returns
-    -------
-    str
-        the encoded message
-    '''
-    # Replace `pass` with your code.
-    # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
 
 def scytale_decipher(message, shift):
-    '''Scytale De-cipher.
-    15 points.
+    # Prepare the grid
+    plaintext = ""
+    rows = len(message) // shift
+    if len(message) % shift != 0:
+        rows += 1
+    grid = [[""] * shift for _ in range(rows)]
 
-    Decrypts a message that was originally encrypted with the `scytale_cipher` function above.
+    # Fill the grid with the ciphertext
+    char_index = 0
+    for row in range(rows):
+        for col in range(shift):
+            if char_index < len(message):
+                grid[row][col] = message[char_index]
+                char_index += 1
 
-    Example:
-    scytale_decipher("IMNNA_FTAOIGROE", 3) -> "INFORMATION_AGE"
-    scytale_decipher("AOTSRIOALRH_EMRNGIMA_PTT", 8) -> "ALGORITHMS_ARE_IMPORTANT"
-    scytale_decipher("IRIANMOGFANEOT__", 4) -> "INFORMATION_AGE_"
+    # Read the plaintext row by row
+    for col in range(shift):
+        for row in range(rows):
+            plaintext += grid[row][col]
 
-    There is no further brief for this number.
+    return plaintext
 
-    Parameters
-    ----------
-    message: str
-        a string of uppercase English letters and underscores (underscores represent spaces)
-    shift: int
-        a positive int that does not exceed the length of message
 
-    Returns
-    -------
-    str
-        the decoded message
-    '''
-    # Replace `pass` with your code.
-    # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+text_encrypt = input("Enter the ciphertext: ")
+shift = int(input("Enter the diameter of the Scytale: "))
+
+decrypted_text = scytale_decipher(text_encrypt, shift)
+print("Decrypted text:", decrypted_text)
