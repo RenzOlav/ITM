@@ -30,9 +30,11 @@ shift_amount = int(input("Enter the shift amount: "))
 shift_letter(input_letter,shift_amount)
 
 def caesar_cipher(message, shift):
+    shifted_message = ""  # Variable to store the shifted message
+
     for i in message:
         if i == " ":
-            print(" ", end="")
+            shifted_message += " "
         else:
             letter = i
             alphabet = list('abcdefghijklmnopqrstuvwxyz')
@@ -42,8 +44,10 @@ def caesar_cipher(message, shift):
 
             if letter.isupper():
                 shifted_letter = shifted_letter.upper()
-            print(shifted_letter, end="")
-    return shifted_letter
+            shifted_message += shifted_letter
+
+    print(shifted_message)
+    return shifted_message
 
 
 messager=str(input("Put message:"))
@@ -52,9 +56,9 @@ caesar_cipher(messager, shifty)
 
 def shift_by_letter(letter, letter_shift):
     if letter == " ":
-        print(" ")
+        return " "
     elif letter == "":
-        print(" ")
+        return " "
     else:
         letter_shift = letter_shift.upper()
         letter_shift = ord(letter_shift) - 65
@@ -65,12 +69,14 @@ def shift_by_letter(letter, letter_shift):
 
         if letter.isupper():
             shifted_letter = shifted_letter.upper()
-        print(shifted_letter)
-        return(shifted_letter)
 
-liter = str(input("input a letter buddy"))
-liter_ship = str(input("isa pang letter buddy"))
-shift_by_letter(liter,liter_ship)
+        return shifted_letter
+
+liter = str(input("input a letter buddy: "))
+liter_ship = str(input("isa pang letter buddy: "))
+result = shift_by_letter(liter, liter_ship)
+print(result)
+
 
 def vigenere_cipher(message, key):
     ciphertext = ""
@@ -91,9 +97,11 @@ def vigenere_cipher(message, key):
 
             ciphertext += shifted_letter
             key_index = (key_index + 1) % key_length
+
         else:
             ciphertext += letter
 
+    print(ciphertext)
     return ciphertext
 
 
@@ -104,60 +112,34 @@ encrypted_text = vigenere_cipher(message, key)
 print("Encrypted text:", encrypted_text)
 
 
+def scytale_encrypt(message, shift):
+    encoded_message = ""
+    message_length = len(message)
 
-def scytale_cipher(message, shift):
-    # Prepare the grid
-    ciphertext = ""
-    rows = len(message) // shift
-    if len(message) % shift != 0:
-        rows += 1
-    grid = [[""] * shift for _ in range(rows)]
+    for i in range(message_length):
+        index = (i // shift) + (message_length // shift) * (i % shift)
+        encoded_message += message[index]
 
-    # Fill the grid with the plaintext
-    char_index = 0
-    for col in range(shift):
-        for row in range(rows):
-            if char_index < len(message):
-                grid[row][col] = message[char_index]
-                char_index += 1
-
-    # Read the ciphertext column by column
-    for row in range(rows):
-        for col in range(shift):
-            ciphertext += grid[row][col]
-
-    return ciphertext
+    return encoded_message
 
 
-mensahe = input("Enter the message (scytale): ")
-diameter = int(input("Enter the shift of the Scytale: "))
-
-encrypted_text = scytale_cipher(mensahe, diameter)
-print("Encrypted text:", encrypted_text)
+# Example usage
+raw_message = str(input("Message"))
+shift_value = int(input("shift"))
+encrypted_message = scytale_encrypt(raw_message, shift_value)
+print("Encrypted Message:", encrypted_message)
 
 
 def scytale_decipher(message, shift):
-    # Prepare the grid
-    plaintext = ""
-    rows = len(message) // shift
-    if len(message) % shift != 0:
-        rows += 1
-    grid = [[""] * shift for _ in range(rows)]
+    decoded_message = ""
+    message_length = len(message)
 
-    # Fill the grid with the ciphertext
-    char_index = 0
-    for row in range(rows):
-        for col in range(shift):
-            if char_index < len(message):
-                grid[row][col] = message[char_index]
-                char_index += 1
+    for i in range(message_length):
+        index = (i // shift) + (message_length // shift) * (i % shift)
+        decoded_message += message[index]
 
-    # Read the plaintext row by row
-    for col in range(shift):
-        for row in range(rows):
-            plaintext += grid[row][col]
+    return decoded_message
 
-    return plaintext
 
 
 text_encrypt = input("Enter the ciphertext: ")
