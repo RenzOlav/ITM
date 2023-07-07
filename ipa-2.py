@@ -7,9 +7,9 @@ This assignment will develop your proficiency with Python's control flows.
 
 def shift_letter(letter, shift):
     if letter == " ":
-        print(" ")
+        return " "
     elif letter == "":
-        print(" ")
+        return ""
     else:
         alphabet = list('abcdefghijklmnopqrstuvwxyz')
         index = alphabet.index(letter.lower())
@@ -18,8 +18,7 @@ def shift_letter(letter, shift):
 
         if letter.isupper():
             shifted_letter = shifted_letter.upper()
-        print(shifted_letter)
-        return(shifted_letter)
+        return shifted_letter
 
 
 
@@ -27,7 +26,7 @@ def shift_letter(letter, shift):
 # Example usage
 input_letter = str(input("Enter a letter: "))
 shift_amount = int(input("Enter the shift amount: "))
-shift_letter(input_letter,shift_amount)
+print(shift_letter(input_letter,shift_amount))
 
 def caesar_cipher(message, shift):
     shifted_message = ""  # Variable to store the shifted message
@@ -45,14 +44,12 @@ def caesar_cipher(message, shift):
             if letter.isupper():
                 shifted_letter = shifted_letter.upper()
             shifted_message += shifted_letter
-
-    print(shifted_message)
     return shifted_message
 
 
 messager=str(input("Put message:"))
 shifty=int(input("Number of shift:"))
-caesar_cipher(messager, shifty)
+print(caesar_cipher(messager, shifty))
 
 def shift_by_letter(letter, letter_shift):
     if letter == " ":
@@ -100,22 +97,23 @@ def vigenere_cipher(message, key):
 
         else:
             ciphertext += letter
-
-    print(ciphertext)
     return ciphertext
 
 
-message = input("Ano message mo para sa madlang people? : ")
-key = input("bigay ka isang word tapos dapat di siya mas mahaba sa message mo kanina ")
-
-encrypted_text = vigenere_cipher(message, key)
-print("Encrypted text:", encrypted_text)
+message = input("Ano message mo?: ")
+key = input("bigay ka isang word: ")
+print("Encrypted text:", vigenere_cipher(message, key))
 
 
-def scytale_encrypt(message, shift):
-    encoded_message = ""
+def scytale_cipher(message, shift):
     message_length = len(message)
 
+    # Check if the length of the message is a multiple of the shift
+    if message_length % shift != 0:
+        # Add additional underscores to make it a multiple
+        message += "_" * (shift - (message_length % shift))
+
+    encoded_message = ""
     for i in range(message_length):
         index = (i // shift) + (message_length // shift) * (i % shift)
         encoded_message += message[index]
@@ -123,22 +121,30 @@ def scytale_encrypt(message, shift):
     return encoded_message
 
 
-# Example usage
-raw_message = str(input("Message"))
-shift_value = int(input("shift"))
-encrypted_message = scytale_encrypt(raw_message, shift_value)
-print("Encrypted Message:", encrypted_message)
+message = input("Enter the message: ")
+shift = int(input("Enter the shift: "))
 
+encrypted_message = scytale_cipher(message, shift)
+print("Encrypted message:", encrypted_message)
 
 def scytale_decipher(message, shift):
-    decoded_message = ""
-    message_length = len(message)
+    # Determine the length of each rail
+    rail_length = len(message) // shift
 
-    for i in range(message_length):
-        index = (i // shift) + (message_length // shift) * (i % shift)
-        decoded_message += message[index]
+    # Create a list of empty strings to represent the rails
+    rails = [''] * shift
 
-    return decoded_message
+    # Distribute the characters of the message onto the rails
+    for i in range(len(message)):
+        rail_index = i % shift
+        rails[rail_index] += message[i]
+
+    # Read the rails vertically to obtain the deciphered message
+    deciphered_message = ''
+    for rail in rails:
+        deciphered_message += rail
+
+    return deciphered_message
 
 
 
