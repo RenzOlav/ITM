@@ -55,7 +55,7 @@ def shift_by_letter(letter, letter_shift):
     if letter == " ":
         return " "
     elif letter == "":
-        return " "
+        return ""
     else:
         letter_shift = letter_shift.upper()
         letter_shift = ord(letter_shift) - 65
