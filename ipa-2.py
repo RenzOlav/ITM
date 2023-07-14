@@ -107,5 +107,3 @@ def scytale_decipher(message, shift):
         deciphered_message += rail
 
     return deciphered_message
-
-print(scytale_decipher('G_EROS_ILTWODAARETRS', 4))
