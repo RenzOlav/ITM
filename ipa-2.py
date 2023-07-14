@@ -1,3 +1,4 @@
+
 def shift_letter(letter, shift):
     if letter == " ":
         return " "
@@ -52,34 +53,33 @@ def shift_by_letter(letter, letter_shift):
 def vigenere_cipher(message, key):
     ciphertext = ""
     key_length = len(key)
-    key_index = 0
+    key = key.upper()  # Convert the key to uppercase for consistency
 
-    for letter in message:
+    for i in range(len(message)):
+        letter = message[i]
         if letter.isalpha():
-            letter_shift = key[key_index].upper()
-            letter_shift = ord(letter_shift) - 65
-            alphabet = list('abcdefghijklmnopqrstuvwxyz')
-            index = alphabet.index(letter.lower())
-            shifted_index = (index + letter_shift) % 26
-            shifted_letter = alphabet[shifted_index]
+            key_letter = key[i % key_length]
+            key_shift = ord(key_letter) - 65
 
             if letter.isupper():
-                shifted_letter = shifted_letter.upper()
+                base = 65
+            else:
+                base = 97
+
+            shifted_letter = chr((ord(letter) - base + key_shift) % 26 + base)  # Apply the Vigenere cipher shift
 
             ciphertext += shifted_letter
-            key_index = (key_index + 1) % key_length
-
         else:
             ciphertext += letter
+
     return ciphertext
 
 def scytale_cipher(message, shift):
     message_length = len(message)
 
-    # Check if the length of the message is a multiple of the shift
-    if message_length % shift != 0:
-        # Add additional underscores to make it a multiple
-        message += "_" * (shift - (message_length % shift))
+    while message_length % shift != 0:
+        message = str(message) + ("_")
+        message_length += 1
 
     encoded_message = ""
     for i in range(message_length):
@@ -87,6 +87,7 @@ def scytale_cipher(message, shift):
         encoded_message += message[index]
 
     return encoded_message
+
 
 def scytale_decipher(message, shift):
     # Determine the length of each rail
@@ -107,3 +108,4 @@ def scytale_decipher(message, shift):
 
     return deciphered_message
 
+print(scytale_decipher('G_EROS_ILTWODAARETRS', 4))

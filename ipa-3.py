@@ -33,17 +33,12 @@ def tic_tac_toe(board):
 
 
 def eta(first_stop, second_stop, route_map):
-    # Check if the first_stop and second_stop are in the route_map
     if (first_stop, second_stop) in route_map:
         return route_map[(first_stop, second_stop)]['travel_time_mins']
 
-    # Iterate over each leg in the route_map
     for leg in route_map:
-        # Check if the first_stop matches the starting point of the leg
         if leg[0] == first_stop:
-            # Check if the second_stop matches the ending point of the leg
             if leg[1] == second_stop:
                 return route_map[leg]['travel_time_mins']
 
-    # If no direct leg is found, return -1 to indicate an invalid route
     return "INVALID"
