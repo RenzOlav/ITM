@@ -53,7 +53,7 @@ def shift_by_letter(letter, letter_shift):
 def vigenere_cipher(message, key):
     ciphertext = ""
     key_length = len(key)
-    key = key.upper()  # Convert the key to uppercase for consistency
+    key = key.upper()
 
     for i in range(len(message)):
         letter = message[i]
@@ -66,7 +66,7 @@ def vigenere_cipher(message, key):
             else:
                 base = 97
 
-            shifted_letter = chr((ord(letter) - base + key_shift) % 26 + base)  # Apply the Vigenere cipher shift
+            shifted_letter = chr((ord(letter) - base + key_shift) % 26 + base)
 
             ciphertext += shifted_letter
         else:
